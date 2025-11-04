@@ -9,7 +9,6 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-// Connection details
 var (
 	Filename = ""
 )
