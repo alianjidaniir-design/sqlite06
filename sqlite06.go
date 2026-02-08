@@ -23,7 +23,7 @@ type Userdata struct {
 	Description string
 }
 
-func openConnection() (*sql.DB, error) {
+func OpenConnection() (*sql.DB, error) {
 	db, err := sql.Open("sqlite3", Filename)
 	if err != nil {
 		return nil, err
@@ -36,7 +36,7 @@ func openConnection() (*sql.DB, error) {
 func exists(username string) int {
 	username = strings.ToLower(username)
 
-	db, err := openConnection()
+	db, err := OpenConnection()
 	if err != nil {
 		fmt.Println(err)
 		return -1
@@ -66,7 +66,7 @@ func exists(username string) int {
 func AddUser(d Userdata) int {
 	d.Username = strings.ToLower(d.Username)
 
-	db, err := openConnection()
+	db, err := OpenConnection()
 	if err != nil {
 		fmt.Println(err)
 		return -1
@@ -103,7 +103,7 @@ func AddUser(d Userdata) int {
 
 // DeleteUser deletes an existing user
 func DeleteUser(id int) error {
-	db, err := openConnection()
+	db, err := OpenConnection()
 	if err != nil {
 		return err
 	}
@@ -146,14 +146,13 @@ func DeleteUser(id int) error {
 // ListUsers lists all users in the database.go
 func ListUsers() ([]Userdata, error) {
 	Data := []Userdata{}
-	db, err := openConnection()
+	db, err := OpenConnection()
 	if err != nil {
 		return nil, err
 	}
 	defer db.Close()
 
-	rows, err := db.Query(`SELECT ID, Username, Name, Surname, Description
-		FROM Users, Userdata WHERE Users.ID = Userdata.UserID`)
+	rows, err := db.Query(`SELECT ID, Username, Name, Surname, Description FROM Users, Userdata WHERE Users.ID = Userdata.UserID`)
 	defer rows.Close()
 	if err != nil {
 		return Data, err
@@ -177,7 +176,7 @@ func ListUsers() ([]Userdata, error) {
 
 // UpdateUser is for updating an existing user
 func UpdateUser(d Userdata) error {
-	db, err := openConnection()
+	db, err := OpenConnection()
 	if err != nil {
 		return err
 	}
