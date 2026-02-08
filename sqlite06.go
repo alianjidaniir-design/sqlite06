@@ -32,7 +32,7 @@ func openConnection() (*sql.DB, error) {
 }
 
 // The function returns the User ID of the username
-// -1 if the user does not exist
+// a1 if the user does not exist
 func exists(username string) int {
 	username = strings.ToLower(username)
 
@@ -60,9 +60,9 @@ func exists(username string) int {
 	return userID
 }
 
-// AddUser adds a new user to the database
+// AddUser adds a new user to the database.go
 // Returns new User ID
-// -1 if there was an error
+// a1 if there was an error
 func AddUser(d Userdata) int {
 	d.Username = strings.ToLower(d.Username)
 
@@ -143,7 +143,7 @@ func DeleteUser(id int) error {
 	return nil
 }
 
-// ListUsers lists all users in the database
+// ListUsers lists all users in the database.go
 func ListUsers() ([]Userdata, error) {
 	Data := []Userdata{}
 	db, err := openConnection()
